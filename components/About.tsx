@@ -7,7 +7,7 @@ import Image from "next/image";
 const STATS = [
   { value: "2+", label: "years exp." },
   { value: "6+", label: "projects shipped" },
-  { value: "5+", label: "Certificates" },
+  { value: "6+", label: "Certificates" },
 ];
 
 const CV_PATH = "/cv-rafie.pdf";

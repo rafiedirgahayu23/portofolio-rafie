@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import StatusBar from "@/components/StatusBar";
-import Preloader from "@/components/Preloader";
-import Navbar from "@/components/Navbar";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -29,12 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${plexMono.variable} ${inter.variable}`}>
-      <body className="font-sans antialiased">
-        <Preloader />
-        <Navbar />
-        <StatusBar />
-        <main className="pb-10">{children}</main>
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

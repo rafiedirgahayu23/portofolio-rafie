@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -21,8 +22,18 @@ export default function ProjectDetailPage({
 }) {
   const project = getProjectBySlug(params.slug);
   const [slide, setSlide] = useState(0);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  useEffect(() => {
+    setImgLoaded(false);
+  }, [slide]);
 
   if (!project) return notFound();
+
+  // Link internal (diawali "/", misalnya /viewer/...) dibuka di tab yang
+  // sama. Link eksternal (https://...) tetap dibuka di tab baru karena
+  // memang beda situs.
+  const isInternalLink = project.links.live?.startsWith("/");
 
   function nextSlide() {
     setSlide((s) => (s + 1) % project!.previews.length);
@@ -79,8 +90,10 @@ export default function ProjectDetailPage({
           {project.links.live ? (
             <a
               href={project.links.live}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(!isInternalLink && {
+                target: "_blank",
+                rel: "noopener noreferrer",
+              })}
               className="flex items-center gap-2 rounded-lg border border-surfaceLine px-4 py-2 font-mono text-xs text-paper transition hover:border-amber hover:text-amber"
             >
               <ExternalLink className="h-3.5 w-3.5" />
@@ -129,20 +142,28 @@ export default function ProjectDetailPage({
           {/* Preview prototype */}
           <div>
             <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-surfaceLine bg-surface">
+              {/* Skeleton shimmer, tampil selagi gambar masih loading */}
+              {!imgLoaded && (
+                <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-surface via-surfaceLine/40 to-surface" />
+              )}
+
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={slide}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: imgLoaded ? 1 : 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3 }}
                   className="h-full w-full"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={project.previews[slide]}
                     alt={`${project.name} - preview ${slide + 1}`}
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority={slide === 0}
+                    onLoad={() => setImgLoaded(true)}
                   />
                 </motion.div>
               </AnimatePresence>

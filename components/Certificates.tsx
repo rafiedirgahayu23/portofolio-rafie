@@ -53,6 +53,15 @@ const CERTIFICATES = [
     year: "2025",
     images: ["/certificates/sertif_oracle_page-0001.jpg"],
   },
+  {
+    title: "Intermediate Assistant Web Developer - VBL - SMK Negeri 4 Bandung",
+    issuer: "Digital Talent",
+    year: "2026",
+    images: [
+      "/certificates/intermediate-sertif1.jpg",
+      "/certificates/intermediate-sertif2.jpg"
+    ],
+  },
 ];
 
 export default function Certificates() {

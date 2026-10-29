@@ -3,7 +3,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 function BookModel() {
@@ -14,14 +13,20 @@ function BookModel() {
 export default function BookViewer() {
   return (
     <div className="relative h-screen w-full bg-ink">
-      {/* Tombol kembali */}
-      <Link
-        href="/#projects"
+      {/* Tombol kembali — pakai <a> biasa (bukan next/link) supaya navigasi
+          antar route group selalu reliable, ke halaman detail project ini. */}
+      <a
+        href="/projects/last-chance-3d-book"
         className="absolute left-6 top-6 z-10 inline-flex items-center gap-2 rounded-md bg-ink/70 px-3 py-2 font-mono text-sm text-paper backdrop-blur-sm transition hover:text-amber"
       >
         <ArrowLeft className="h-4 w-4" />
         Back
-      </Link>
+      </a>
+
+      {/* Judul halaman, di tengah atas */}
+      <h1 className="absolute left-1/2 top-6 z-10 -translate-x-1/2 whitespace-nowrap font-mono text-sm text-paper sm:text-base">
+        3D Model Book
+      </h1>
 
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, 1.2, 2.4], fov: 40 }}>
         <ambientLight intensity={0.8} />
@@ -32,7 +37,6 @@ export default function BookViewer() {
           <BookModel />
         </Suspense>
 
-        {/* OrbitControls manual: Pengguna bisa memutar dan mengontrol kamera */}
         <OrbitControls
           enableRotate={true}
           enableZoom={true}

@@ -37,9 +37,13 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
       className="fixed left-0 right-0 top-0 z-40 flex items-center justify-between px-6 py-5 sm:px-12"
     >
-      <a href="#hero" className="flex items-center gap-2 font-mono text-sm font-semibold text-paper">
+      <a
+        href="#hero"
+        onClick={() => setActive("hero")}
+        className="flex items-center gap-2 font-mono text-sm font-semibold text-paper"
+      >
         <span className="h-1.5 w-1.5 rounded-full bg-amber" />
-        Rafie Dirgahayu
+        rafie.dev
       </a>
 
       <nav className="hidden items-center gap-1 rounded-full border border-surfaceLine bg-surface/70 p-1 backdrop-blur sm:flex">
@@ -47,8 +51,10 @@ export default function Navbar() {
           <a
             key={item.id}
             href={`#${item.id}`}
-            className={`relative rounded-full px-4 py-1.5 font-mono text-xs transition ${active === item.id ? "text-ink" : "text-body hover:text-paper"
-              }`}
+            onClick={() => setActive(item.id)}
+            className={`relative rounded-full px-4 py-1.5 font-mono text-xs transition ${
+              active === item.id ? "text-ink" : "text-body hover:text-paper"
+            }`}
           >
             {active === item.id && (
               <motion.span
@@ -64,6 +70,7 @@ export default function Navbar() {
 
       <a
         href="#contact"
+        onClick={() => setActive("contact")}
         className="rounded-full bg-gradient-to-r from-lilac to-amber px-4 py-2 font-mono text-xs font-medium text-ink transition hover:brightness-110"
       >
         Hire Me →
