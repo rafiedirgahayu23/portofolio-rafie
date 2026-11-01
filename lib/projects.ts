@@ -80,7 +80,7 @@ export const PROJECTS: Project[] = [
       "Custom Flip-Page Animations: Sequence animasi pergerakan 19 lembar halaman yang halus dan responsif.",
       "Low-Poly & Engine-Ready Optimization: Geometry yang efisien dan siap diintegrasikan langsung ke game engine."],
     links: { live: "/viewer/last-chance-3d-book" },
-    thumbnail: "/blender.jfif",
+    thumbnail: "/blender.jpg",
     previews: ["/bookblander.jpg"],
   },
   {
